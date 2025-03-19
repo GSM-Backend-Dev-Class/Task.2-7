@@ -23,13 +23,15 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           docker-compose --version
-      - name: 🐋 Docker Run
+      - name: 🐋 Docker Run (MySQL & Redis)
         run: docker-compose -f compose.yaml up -d
+      - name: 🐋 Run Groom Server Container
+        run: docker run -d -p 8080:8080 groom-server:test
       - name: ⌛ Wait for Application
         run: sleep 45
       - name: 🧪 Test Application
         run: |
-          RESPONSE=$(curl "http://localhost:8080/health/check")
+          RESPONSE=$(curl -s "http://localhost:8080/health/check")
           if [ "$RESPONSE" != "OK" ]; then
             echo "💣 Health Check Failed"
             exit 1
