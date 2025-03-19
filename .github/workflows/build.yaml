@@ -21,6 +21,8 @@ jobs:
           docker-compose --version
       - name: 🐋 Docker Run (MySQL & Redis)
         run: docker-compose -f compose.yaml up -d
+      - name: ⌛ Wait for Services
+        run: sleep 30
       - name: 🐋 Run Task.2-7 Server Container
         run: docker run --name task27-server --network=compose_default -d -p 8080:8080 task27:test
       - name: ⌛ Wait for Application
