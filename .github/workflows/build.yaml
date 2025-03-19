@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: 📂 Checkout Repository
         uses: actions/checkout@v3
-      - name: 📦 Download Artifact
-        uses: actions/download-artifact@v4
       - name: 🐋 Docker Build
         run: docker build -t groom-server:test .
       - name: ⏬ Install Docker Compose
