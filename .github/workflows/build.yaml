@@ -26,7 +26,7 @@ jobs:
       - name: ⌛ Wait for Application
         run: sleep 45
       - name: 🧪 Log Trace
-        run: docker ps -q | xargs -n 1 docker logs
+        run: docker logs groom-server:test
       - name: 🧪 Test Application
         run: |
           RESPONSE=$(curl -s "http://localhost:8080/health/check")
