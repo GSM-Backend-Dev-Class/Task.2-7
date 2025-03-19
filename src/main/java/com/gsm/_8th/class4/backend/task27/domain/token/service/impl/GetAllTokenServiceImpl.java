@@ -7,7 +7,9 @@ import com.gsm._8th.class4.backend.task27.domain.token.service.GetAllTokenServic
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -19,8 +21,11 @@ public class GetAllTokenServiceImpl implements GetAllTokenService {
 
     @Override
     public List<Token> getAllToken() {
-        return StreamSupport.stream(tokenRepository.findAll().spliterator(), false)
+        Iterable<TokenEntity> iterable = tokenRepository.findAll();
+        return StreamSupport.stream(iterable.spliterator(), false)
+                .filter(Objects::nonNull)
                 .map(TokenEntity::toDto)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 }
