@@ -11,3 +11,11 @@ spring:
     redis:
       host: redis
       port: 6380
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    properties:
+      hibernate:
+        format_sql: true
