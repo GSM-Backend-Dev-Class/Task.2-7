@@ -16,7 +16,7 @@ COPY --from=base /app/build/libs/task27-0.0.1-SNAPSHOT.jar /app/app.jar
 RUN rm -rf /app/.gradle /app/build/tmp /root/.gradle
 ENV TZ=${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENV SPRING_PROFILES_ACTIVE = test
+ENV SPRING_PROFILES_ACTIVE=test
 USER appuser
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
