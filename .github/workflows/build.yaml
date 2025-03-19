@@ -22,11 +22,11 @@ jobs:
       - name: 🐋 Docker Run (MySQL & Redis)
         run: docker-compose -f compose.yaml up -d
       - name: 🐋 Run Task.2-7 Server Container
-        run: docker run -d -p 8080:8080 task27:test
+        run: docker run --name task27-server -d -p 8080:8080 task27:test
       - name: ⌛ Wait for Application
         run: sleep 45
       - name: 🧪 Log Trace
-        run: docker logs task27:test
+        run: docker logs task27-server
       - name: 🧪 Test Application
         run: |
           RESPONSE=$(curl -s "http://localhost:8080/health/check")
