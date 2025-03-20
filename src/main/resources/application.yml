@@ -3,3 +3,5 @@ spring:
     name: task27
     profiles:
       active: ${SPRING_PROFILES_ACTIVE:dev}
+server:
+  port: 1234
