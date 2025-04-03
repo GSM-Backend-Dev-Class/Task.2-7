@@ -34,7 +34,7 @@ jobs:
 
       - name: 🧪 Test Application
         run: |
-          RESPONSE=$(curl -s "http://localhost:1234/health/check")
+          RESPONSE=$(curl -s "http://localhost:8080/health/check")
           if [ "$RESPONSE" != "OK" ]; then
             echo "💣 Health Check Failed"
             exit 1
