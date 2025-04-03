@@ -1,7 +1,13 @@
 ## 🐋 Dockerfile 내용
 ```dockerfile
-# 해당 주석을 지우고 Dockerfile 내용을 입력해주세요.
+FROM gradle:8-jdk-alpine AS builder
+WORKDIR /app
+COPY --chown=gradle:gradle . .
+RUN gradle build --no-daemon
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
+CMD ["java", "-jar", "app.jar"]
 ```
 
 ## 📷 API 요청 결과 스크린샷
-> API 요청 결과의 스크린샷들을 첨부하여주세요.
