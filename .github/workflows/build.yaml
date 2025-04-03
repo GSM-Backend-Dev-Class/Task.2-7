@@ -28,7 +28,10 @@ jobs:
       - name: ⌛ Wait for Application
         run: sleep 45
       - name: 📃 Log Trace
-        run: docker logs task27-server
+        run: |
+          echo "📢 Tracking logs for task27-server..."
+          timeout 60s docker logs -f task27-server
+
       - name: 🧪 Test Application
         run: |
           RESPONSE=$(curl -s "http://localhost:1234/health/check")
