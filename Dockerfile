@@ -1,9 +1,12 @@
-FROM gradle:8-jdk-alpine AS builder
-WORKDIR /app
-COPY --chown=gradle:gradle . .
-RUN gradle build --no-daemon
-FROM openjdk:17-jdk-slim AS runtime
-WORKDIR /app
-COPY --from=builder /app/build/libs/task27-0.0.1-SNAPSHOT.jar app.jar
-ENV APP_JAR=app.jar
-CMD ["java", "-jar", "$APP_JAR"]
+FROM gradle:8.3-jdk17 AS builder
+WORKDIR /build
+
+COPY . /build
+RUN gradle build -x test --parallel
+
+FROM openjdk:23-jdk-slim AS runtime
+ENV SPRING_PROFILES_ACTIVE=test
+WORKDIR /build
+COPY --from=builder /build/build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar", "app.jar"]
