@@ -1,4 +1,4 @@
-ROM gradle:8-jdk-alpine AS builder
+FROM gradle:8-jdk-alpine AS builder
 WORKDIR /app
 COPY --chown=gradle:gradle . .
 RUN gradle build --no-daemon
