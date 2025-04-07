@@ -1,2 +1,12 @@
-# 아래 ENV 명령어를 제외하고 주석을 제거한 후 Dockerfile를 작성하세요.
+FROM gradle:8.3-jdk17 AS builder
+WORKDIR /build
+
+COPY . /build
+RUN gradle build -x test --parallel
+
+FROM openjdk:23-jdk-slim AS runtime
 ENV SPRING_PROFILES_ACTIVE=test
+WORKDIR /build
+COPY --from=builder /build/build/libs/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar", "app.jar"]
